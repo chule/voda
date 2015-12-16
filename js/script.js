@@ -68,8 +68,8 @@ function onDeviceReady() {
 //Insert query
 //
 function insertDB(tx) {
-    tx.executeSql('INSERT INTO DEMO (name,number) VALUES ("' +document.getElementById("txtName").value
-            +'","'+document.getElementById("txtNumber").value+'")');
+    tx.executeSql('INSERT INTO DEMO (name,number) VALUES ("' +d3.select("#txtName").value
+            +'","'+d3.select("#txtNumber").value+'")');
 }
 
 function goInsert() {
