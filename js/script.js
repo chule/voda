@@ -19,11 +19,8 @@ function queryDB(tx) {
 }
 
 function searchQueryDB(tx) {
-/*    tx.executeSql("SELECT * FROM DEMO where name like ('%"+ document.getElementById("txtName").value + "%')",
-            [], querySuccess, errorCB);*/
-    tx.executeSql("SELECT * FROM DEMO where name like ('%"+ d3.select("#txtName").value + "%')",
+    tx.executeSql("SELECT * FROM DEMO where name like ('%"+ document.getElementById("txtName").value + "%')",
             [], querySuccess, errorCB);
-
 }
 // Query the success callback
 //
@@ -68,8 +65,8 @@ function onDeviceReady() {
 //Insert query
 //
 function insertDB(tx) {
-    tx.executeSql('INSERT INTO DEMO (name,number) VALUES ("' +d3.select("#txtName").value
-            +'","'+d3.select("#txtNumber").value+'")');
+    tx.executeSql('INSERT INTO DEMO (name,number) VALUES ("' +document.getElementById("txtName").value
+            +'","'+document.getElementById("txtNumber").value+'")');
 }
 
 function goInsert() {
@@ -91,9 +88,9 @@ function goDelete() {
 //Show the popup after tapping a row in table
 //
 function goPopup(row,rowname,rownum) {
-    currentRow=row;
+    currentRow = row;
+    d3.select("#tblDiv").text(row);
     document.getElementById("qrpopup").style.display="block";
-    document.getElementById("editId").value = row;
     document.getElementById("editNameBox").value = rowname;
     document.getElementById("editNumberBox").value = rownum;
 }
