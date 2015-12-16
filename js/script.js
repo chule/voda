@@ -19,8 +19,11 @@ function queryDB(tx) {
 }
 
 function searchQueryDB(tx) {
-    tx.executeSql("SELECT * FROM DEMO where name like ('%"+ document.getElementById("txtName").value + "%')",
+/*    tx.executeSql("SELECT * FROM DEMO where name like ('%"+ document.getElementById("txtName").value + "%')",
+            [], querySuccess, errorCB);*/
+    tx.executeSql("SELECT * FROM DEMO where name like ('%"+ d3.select("#txtName").value + "%')",
             [], querySuccess, errorCB);
+
 }
 // Query the success callback
 //
