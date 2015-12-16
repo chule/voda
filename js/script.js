@@ -9,7 +9,7 @@ var currentRow;
 // Populate the database
 //
 function populateDB(tx) {
-    tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id INTEGER PRIMARY KEY AUTOINCREMENT, name,number)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id INTEGER PRIMARY KEY AUTOINCREMENT, name, number)');
 }
 
 // Query the database
