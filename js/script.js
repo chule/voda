@@ -89,7 +89,8 @@ function goDelete() {
 //
 function goPopup(row,rowname,rownum) {
     currentRow = row;
-    d3.select("#tblDiv").text(row);
+
+    d3.select("#editId").text(row);
     document.getElementById("qrpopup").style.display="block";
     document.getElementById("editNameBox").value = rowname;
     document.getElementById("editNumberBox").value = rownum;
