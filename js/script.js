@@ -92,10 +92,10 @@ function goDelete() {
 //
 function goPopup(row,rowname,rownum) {
     currentRow=row;
-    d3.select("#qrpopup").style.display="block";
-    d3.select("#editId").text = row;
-    d3.select("#editNameBox").value = rowname;
-    d3.select("#editNumberBox").value = rownum;
+    document.getElementById("qrpopup").style.display="block";
+    document.getElementById("editId").value = row;
+    document.getElementById("editNameBox").value = rowname;
+    document.getElementById("editNumberBox").value = rownum;
 }
 
 function editRow(tx) {
