@@ -1,101 +1,104 @@
-
 <!DOCTYPE html>
-<html>
-    <head>
+<html ng-app="MyApp">
+  <head>
+    
+<!-- https://www.youtube.com/watch?v=xS3G1uFXrJk -->
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>MyApp</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/framework7/1.3.1/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/framework7/1.3.1/css/framework7.ios.colors.min.css">
+    <link rel="stylesheet" href="css/main.css">
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-
-        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-        <title>Potrošnja vode</title>
-    </head>
-<body ng-app="toDoApp">
-
-    <div>
-         <h1>Todo list - store items to local database</h1>
-
-         <h3>Use Google chrome to inspect the content of the local database by pressing F12 and selecting the Resources tab</h3>
-
-        <div ng-controller="TodoCtrl">
-            <label>Task:</label>
-            <input ng-model="newTodo.task" />
-            <label>Place:</label>
-            <input ng-model="newTodo.place" />
-            <label>Completed:</label>
-            <input type="checkbox" ng-model="newTodo.done" /> 
-            <a href="#" ng-click="addNew(newTodo)">Add new</a>
-
-            <ul>
-                <li ng-repeat="todo in todos">{{todo.Id}}, <input type="text" value="{{todo.task}}" ng-model="todo.task">,
-                <input type="text" value="{{todo.place}}" ng-model="todo.place">
-                    Completed: <input type="checkbox" ng-model="todo.done" ng-click="todo.save()"/> 
-                    <button ng-click="todo.save()">UPDATE</button>
-                    <button ng-click="remove(todo)">REMOVE</button>
-                </li>
-            </ul>
+    <!-- Scripts -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/framework7/1.3.1/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="js/service/InitService.js"></script>
+    <script type="text/javascript" src="js/service/DataService.js"></script>
+    
+    <script type="text/javascript" src="js/controller/IndexPageController.js"></script>
+    <script type="text/javascript" src="js/controller/DetailPageController.js"></script>
+    
+  </head>
+  <body>
+    <div class="statusbar-overlay"></div>
+    <div class="panel-overlay"></div>
+    <div class="views">
+      <div class="view view-main">
+        
+        <!-- Navbar -->
+        <div class="navbar no-border">
+          <div class="navbar-inner">
+            <div class="left"></div>
+            <div class="center sliding">MyApp Index Page</div>
+            <div class="right"></div>
+          </div>
+          <div class="navbar-inner cached" data-page="detailsPage">
+            <div class="left sliding">
+              <a href="index" class="link back">
+                <i class="icon icon-back"></i><span>Back</span>
+              </a>
+            </div>
+            <div class="center sliding">Detail page</div>
+            <div class="right"></div>
+          </div>
         </div>
+        
+        <!-- Pages -->
+        <div class="pages navbar-through toolbar-through">
+          
+          <!-- Page 1 -->
+          <div data-page="index" class="page" ng-controller="IndexPageController">
+            <!-- Page content-->
+            <div class="page-content">
+<!--               Click <a href="#detailsPage">here</a> to go to page 2 -->
+
+                <div class="list-block media-list">
+                  <ul ng-repeat="movie in movies">
+                    <li>
+                      <a href="#detailsPage" ng-click="onItemClicked(movie)" class="item-link item-content">
+                        <div class="item-media"><img ng-src="{{movie.posters.thumbnail}}" width="80"></div>
+                        <div class="item-inner">
+                          <div class="item-title-row">
+                            <div class="item-title">{{movie.title}}</div>
+
+                          </div>
+
+                          <div class="item-text">{{movie.synopsis}}</div>
+                        </div>
+                      </a>
+                    </li>
+
+                  </ul>
+                </div>
+
+            </div>
+          </div>
+
+          <!-- Page 2 -->
+          <div data-page="detailsPage" class="page cached" ng-controller="DetailPageController">
+            <!-- Page content-->
+            <div class="page-content">
+
+                <div class="card">
+                  <div class="card-header">{{movie.title}}</div>
+                  <div class="card-content">
+                    <div class="card-content-inner">{{movie.synopsis}}</div>
+                  </div>
+                </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="http://include.jaydata.org/jaydata.js"></script>
-
-<script type="text/javascript">
-
-// http://www.oodlestechnologies.com/blogs/Use-of-Web-SQL-in-Phonegap
-// https://github.com/orbitaloop/WebSqlSync
-
-var app = angular.module("toDoApp", []);
-
-app.controller("TodoCtrl", ["$scope", function ($scope) {
-
-    $scope.todos = [];
-
-    var Todo = $data.define("Todo", {
-        task: String,
-        place: String,
-        done: Boolean
-    });
-
-    Todo.readAll().then(function (todos) {
-        $scope.$apply(function () {
-            $scope.todos = todos;
-        });
-    });
-
-    $scope.addNew = function (todo) {
-        Todo.save(todo).then(function (todo) {
-            $scope.$apply(function () {
-                $scope.newTodo = null;
-                $scope.todos.push(todo);
-            });
-        });
-    };
-
-    $scope.remove = function (todo) {
-
-        todo.remove();
-
-        Todo.readAll().then(function (todos) {
-            $scope.$apply(function () {
-                $scope.todos = todos;
-            });
-        });         
-    };
-
-}]);
-
-
-
-
-</script>
-</body>
-<!-- cordova script (this will be a 404 during development) -->
-<!--     <script src="cordova.js"></script> -->
-
-
   </body>
 </html>
