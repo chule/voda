@@ -17,6 +17,8 @@
     <div>
          <h1>Todo list - store items to local database</h1>
 
+         <h3>Use Google chrome to inspect the content of the local database by pressing F12 and selecting the Resources tab</h3>
+
         <div ng-controller="TodoCtrl">
             <label>Task:</label>
             <input ng-model="newTodo.task" />
@@ -37,13 +39,63 @@
         </div>
     </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="http://include.jaydata.org/jaydata.js"></script>
+
+<script type="text/javascript">
+
+// http://www.oodlestechnologies.com/blogs/Use-of-Web-SQL-in-Phonegap
+// https://github.com/orbitaloop/WebSqlSync
+
+var app = angular.module("toDoApp", []);
+
+app.controller("TodoCtrl", ["$scope", function ($scope) {
+
+    $scope.todos = [];
+
+    var Todo = $data.define("Todo", {
+        task: String,
+        place: String,
+        done: Boolean
+    });
+
+    Todo.readAll().then(function (todos) {
+        $scope.$apply(function () {
+            $scope.todos = todos;
+        });
+    });
+
+    $scope.addNew = function (todo) {
+        Todo.save(todo).then(function (todo) {
+            $scope.$apply(function () {
+                $scope.newTodo = null;
+                $scope.todos.push(todo);
+            });
+        });
+    };
+
+    $scope.remove = function (todo) {
+
+        todo.remove();
+
+        Todo.readAll().then(function (todos) {
+            $scope.$apply(function () {
+                $scope.todos = todos;
+            });
+        });         
+    };
+
+}]);
+
+
+
+
+</script>
+</body>
 <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
-    <script src="js/d3.v3.min.js" charset="utf-8"></script>    
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="http://include.jaydata.org/jaydata.js"></script>      
-    <script src="js/script.js" charset="utf-8"></script>    
+<!--     <script src="cordova.js"></script> -->
+
 
   </body>
 </html>
