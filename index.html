@@ -1,35 +1,48 @@
+
 <!DOCTYPE html>
 <html>
-<head>
-	<title></title>
-</head>
- <body>
-    <h1>Potrošnja vode</h1>
-    <p>Open Database</p>
-    <div id="qrpopup" > //The hidden div tag for implementing the popup
-            <hr/>
-            <div id="editId">ddd</div>
-            <input type="text" id="editNameBox"><br>
-            <input type="text" id="editNumberBox"><br>
-            <button onclick="goDelete()">Delete</button>
-            <button onclick="goEdit()">Edit</button>
-            <button onclick="document.getElementById('qrpopup').style.display='none';">Discard</button>
-    </div>
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+        <title>Potrošnja vode</title>
+    </head>
+<body ng-app="toDoApp">
 
     <div>
-        Name<input type="text" value="Name" id="txtName">
-        Number<input type="text" value="123" id="txtNumber"><hr/>
-    </div>
-    <div id="tblDiv"></div>
-    <div style="text-align: center">
-        <button onclick="goInsert()">Insert</button>
-        <button onclick="goSearch()">Search</button>
-        <button onclick="successCB()">Show All</button>
+         <h1>Todo list - store items to local database</h1>
+
+        <div ng-controller="TodoCtrl">
+            <label>Task:</label>
+            <input ng-model="newTodo.task" />
+            <label>Place:</label>
+            <input ng-model="newTodo.place" />
+            <label>Completed:</label>
+            <input type="checkbox" ng-model="newTodo.done" /> 
+            <a href="#" ng-click="addNew(newTodo)">Add new</a>
+
+            <ul>
+                <li ng-repeat="todo in todos">{{todo.Id}}, <input type="text" value="{{todo.task}}" ng-model="todo.task">,
+                <input type="text" value="{{todo.place}}" ng-model="todo.place">
+                    Completed: <input type="checkbox" ng-model="todo.done" ng-click="todo.save()"/> 
+                    <button ng-click="todo.save()">UPDATE</button>
+                    <button ng-click="remove(todo)">REMOVE</button>
+                </li>
+            </ul>
+        </div>
     </div>
 
 <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
-    <script src="js/d3.v3.min.js" charset="utf-8"></script>      
+    <script src="js/d3.v3.min.js" charset="utf-8"></script>    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="http://include.jaydata.org/jaydata.js"></script>      
     <script src="js/script.js" charset="utf-8"></script>    
 
   </body>
